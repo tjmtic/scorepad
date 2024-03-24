@@ -29,7 +29,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.abyxcz.scorepad.ui.GameScreen
+import com.abyxcz.scorepad.ui.NameScreen
+import com.abyxcz.scorepad.ui.TitleScreen
 import com.abyxcz.scorepad.ui.component.SimpleAdView
+import com.abyxcz.scorepad.ui.component.TileCounterList
 import com.abyxcz.scorepad.ui.theme.ScorepadTheme
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.flow.onEach
@@ -81,35 +85,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Composable
-fun TitleScreen(onClick: () -> Unit ){
-    Column{
 
-        SimpleAdView()
-
-        Text(text="Tic Tac Toe")
-        Button( modifier = Modifier,
-            onClick = {onClick()}, content = {
-                Text(text="Play")
-            })
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun NameScreen(value1: String, onValue1Change: (String) -> Unit, value2: String, onValue2Change: (String) -> Unit, onClick: () -> Unit){
-
-    Column{
-        TextField(value= value1, onValueChange = { onValue1Change(it)} )
-        TextField(value= value2, onValueChange = { onValue2Change(it)} )
-        Button( modifier = Modifier,
-            onClick = { onClick()}, content = {
-                Text(text="Play")
-            })
-    }
-
-
-}
 
 @Composable
 fun Tile(tile: TicTacToeTile, onClick: () -> Unit){
@@ -131,20 +109,7 @@ fun Tile(tile: TicTacToeTile, onClick: () -> Unit){
     }
 }
 
-@Composable
-fun GameScreen(board: List<TicTacToeTile>, onClick: (Int) -> Unit){
-    LazyVerticalGrid(columns= GridCells.Fixed(3)) {
-        itemsIndexed(board) { index, item ->
-            Tile(item) { onClick(index) }
-        }
-    }
-}
 
-@Preview
-@Composable
-fun PreviewTitleScreen(){
-    TitleScreen({})
-}
 
 @Preview(showBackground = true)
 @Composable
@@ -152,12 +117,4 @@ fun GreetingPreview() {
     ScorepadTheme {
         Greeting("Android")
     }
-}
-
-@Preview
-@Composable
-fun GameScreenPreview(){
-    GameScreen(board = mutableListOf<TicTacToeTile>().apply{ repeat(9){ this.add(
-        TicTacToeTile()
-    )}}, onClick = {})
 }
