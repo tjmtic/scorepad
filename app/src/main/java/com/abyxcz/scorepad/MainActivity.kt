@@ -32,6 +32,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.abyxcz.scorepad.ui.GameScreen
 import com.abyxcz.scorepad.ui.NameScreen
 import com.abyxcz.scorepad.ui.TitleScreen
+import com.abyxcz.scorepad.ui.component.SimpleAdContainer
 import com.abyxcz.scorepad.ui.component.SimpleAdView
 import com.abyxcz.scorepad.ui.component.TileCounterList
 import com.abyxcz.scorepad.ui.theme.ScorepadTheme
@@ -46,6 +47,8 @@ class MainActivity : ComponentActivity() {
         val mainViewModel: MainViewModel by viewModels()
         var uiState: MainViewModelUiState by mutableStateOf(MainViewModelUiState.TitleScreen)
 
+
+        //TODO: Replace with navcontroller and routes
         lifecycleScope.launch{
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
                 mainViewModel.uiState.onEach{ uiState = it }.collect{}
@@ -59,15 +62,29 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    SimpleAdContainer {
 
-                    val state by mainViewModel.state.collectAsState()
+                        val state by mainViewModel.state.collectAsState()
 
-                    when(uiState){
-                        is MainViewModelUiState.TitleScreen -> { TitleScreen { mainViewModel.goToNameScreen() } }
-                        is MainViewModelUiState.NameScreen -> { NameScreen(state.nameOne, {name -> mainViewModel.updateNameOne(name)},
-                            state.nameTwo, {name -> mainViewModel.updateNameTwo(name)},
-                            { mainViewModel.goToGameScreen() }) }
-                        is MainViewModelUiState.GameScreen -> { GameScreen(state.tiles) { index -> mainViewModel.selectTile(index) } }
+                        when (uiState) {
+
+                            is MainViewModelUiState.TitleScreen -> {
+                                TitleScreen({mainViewModel.goToNameScreen()}){ game -> mainViewModel.selectGame(game) }
+                            }
+
+                            is MainViewModelUiState.NameScreen -> {
+                                NameScreen(state.nameOne,
+                                    { name -> mainViewModel.updateNameOne(name) },
+                                    state.nameTwo,
+                                    { name -> mainViewModel.updateNameTwo(name) },
+                                    { mainViewModel.goToGameScreen() },
+                                    { mainViewModel.resetGame() })
+                            }
+
+                            is MainViewModelUiState.GameScreen -> {
+                                GameScreen(state.tiles) { index -> mainViewModel.selectTile(index) }
+                            }
+                        }
                     }
                 }
             }
