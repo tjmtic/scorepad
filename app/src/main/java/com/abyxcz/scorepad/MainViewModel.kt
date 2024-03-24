@@ -27,7 +27,11 @@ class MainViewModel: ViewModel() {
 
     private fun onEvent(event: MainViewModelEvent){
         when(event){
+            is MainViewModelEvent.ResetEvent -> { _uiState.update{ MainViewModelUiState.TitleScreen } }
             is MainViewModelEvent.BeginEvent -> { _uiState.update{ MainViewModelUiState.NameScreen } }
+            is MainViewModelEvent.GameSelectionEvent -> { _state.update{ it.copy(gameSelection = event.game) } }
+            is MainViewModelEvent.GameResetEvent -> { _state.update{ it.copy(gameSelection = null) } }
+
             is MainViewModelEvent.NameOneUpdateEvent -> { _state.update{ it.copy(nameOne = event.name) } }
             is MainViewModelEvent.NameTwoUpdateEvent -> { _state.update{ it.copy(nameTwo = event.name) } }
             is MainViewModelEvent.GameStartEvent -> { _uiState.update{ MainViewModelUiState.GameScreen } }
@@ -36,10 +40,28 @@ class MainViewModel: ViewModel() {
         }
     }
 
+    //Title Screen
+    fun selectGame(game: Game){
+        onEvent(MainViewModelEvent.GameSelectionEvent(game))
+        goToNameScreen()
+    }
+
+    fun resetGame(){
+        onEvent(MainViewModelEvent.GameResetEvent)
+        goToTitleScreen()
+    }
+
+    fun goToTitleScreen(){
+        onEvent(MainViewModelEvent.ResetEvent)
+    }
+
     fun goToNameScreen(){
         onEvent(MainViewModelEvent.BeginEvent)
     }
 
+
+
+    //Name Screen
     fun updateNameOne(name: String){
         onEvent(MainViewModelEvent.NameOneUpdateEvent(name))
     }
@@ -51,6 +73,10 @@ class MainViewModel: ViewModel() {
     fun goToGameScreen(){
         onEvent(MainViewModelEvent.GameStartEvent)
     }
+
+
+
+    //Game Screen
 
     fun updateTile(index: Int){
         onEvent(MainViewModelEvent.TileUpdateEvent(index))
@@ -89,6 +115,7 @@ class MainViewModel: ViewModel() {
 data class TicTacToeTile(var value:Int = 0)
 
 data class MainViewModelState (
+    val gameSelection: Game? = null,
     val nameOne : String = "",
     val nameTwo : String = "",
     val tiles : List<TicTacToeTile> = mutableListOf<TicTacToeTile>().apply{ repeat(9){ this.add(
@@ -99,7 +126,10 @@ data class MainViewModelState (
 ) : Serializable
 
 sealed interface MainViewModelEvent{
+    object ResetEvent: MainViewModelEvent
     object BeginEvent: MainViewModelEvent
+    data class GameSelectionEvent(val game: Game): MainViewModelEvent
+    object GameResetEvent: MainViewModelEvent
     data class NameOneUpdateEvent(val name: String): MainViewModelEvent
     data class NameTwoUpdateEvent(val name: String): MainViewModelEvent
     object GameStartEvent: MainViewModelEvent
@@ -111,4 +141,11 @@ sealed interface MainViewModelUiState{
     object TitleScreen: MainViewModelUiState
     object NameScreen: MainViewModelUiState
     object GameScreen: MainViewModelUiState
+}
+
+sealed interface Game {
+    data class TicTacToe(val name: String): Game
+    data class Dominos(val name: String): Game
+
+    data class Games(val name:String): Game
 }

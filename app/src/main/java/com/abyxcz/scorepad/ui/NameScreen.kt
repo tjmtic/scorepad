@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun NameScreen(value1: String, onValue1Change: (String) -> Unit, value2: String, onValue2Change: (String) -> Unit, onClick: () -> Unit){
+fun NameScreen(value1: String, onValue1Change: (String) -> Unit, value2: String, onValue2Change: (String) -> Unit, onClick: () -> Unit, onBack: () -> Unit){
 
     Column{
         TextField(value= value1, onValueChange = { onValue1Change(it)} )
@@ -16,6 +16,11 @@ fun NameScreen(value1: String, onValue1Change: (String) -> Unit, value2: String,
         Button( modifier = Modifier,
             onClick = { onClick()}, content = {
                 Text(text="Play")
+            })
+
+        Button( modifier = Modifier,
+            onClick = { onBack()}, content = {
+                Text(text="Back")
             })
     }
 
