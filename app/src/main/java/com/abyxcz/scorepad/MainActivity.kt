@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -22,12 +23,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.abyxcz.scorepad.ui.component.SimpleAdView
 import com.abyxcz.scorepad.ui.theme.ScorepadTheme
+import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
@@ -64,6 +68,8 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        MobileAds.initialize(this) {}
     }
 }
 
@@ -78,6 +84,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun TitleScreen(onClick: () -> Unit ){
     Column{
+
+        SimpleAdView()
+
         Text(text="Tic Tac Toe")
         Button( modifier = Modifier,
             onClick = {onClick()}, content = {
