@@ -18,13 +18,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
+import com.abyxcz.scorepad.Player
 
 @Composable
-fun TileCounter(){
+fun TileCounter(player: Player, onCount: (player:Player, score: Int)->Unit){
 
     var count by rememberSaveable { mutableStateOf(0) }
 
-    Box(Modifier.clickable { count += 1 }.fillMaxSize().background(
+    Box(Modifier.clickable { count += 1; onCount(player, 1) }.fillMaxSize().background(
         color = MaterialTheme.colorScheme.primaryContainer,
         shape = RoundedCornerShape(20.dp),
     )) {
@@ -32,7 +33,7 @@ fun TileCounter(){
             modifier = Modifier
                 .padding(22.dp),
         ) {
-            Text(count.toString())
+            Text("${player.name} ${player.score} $count")
         }
     }
 }

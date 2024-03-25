@@ -34,7 +34,11 @@ class MainViewModel: ViewModel() {
 
             is MainViewModelEvent.NameOneUpdateEvent -> { _state.update{ it.copy(nameOne = event.name) } }
             is MainViewModelEvent.NameTwoUpdateEvent -> { _state.update{ it.copy(nameTwo = event.name) } }
+            is MainViewModelEvent.AddPlayerEvent -> { _state.update{ it.copy(players = it.players.plus(event.player)) } }
+            is MainViewModelEvent.UpdatePlayerEvent -> { /* TODO */ }
             is MainViewModelEvent.GameStartEvent -> { _uiState.update{ MainViewModelUiState.GameScreen } }
+
+
             is MainViewModelEvent.TileUpdateEvent -> { selectTile(event.index) }
             is MainViewModelEvent.GameFinishedEvent -> { /* show winning dialogs */ }
         }
@@ -70,6 +74,14 @@ class MainViewModel: ViewModel() {
         onEvent(MainViewModelEvent.NameTwoUpdateEvent(name))
     }
 
+    fun createNewPlayer(name: String){
+        //
+        val newPlayer = Player(name, 0)
+        //
+
+        onEvent(MainViewModelEvent.AddPlayerEvent(newPlayer))
+    }
+
     fun goToGameScreen(){
         onEvent(MainViewModelEvent.GameStartEvent)
     }
@@ -77,6 +89,30 @@ class MainViewModel: ViewModel() {
 
 
     //Game Screen
+
+    fun updatePlayer(player: Player, update: Int){
+        println("updating player 1...")
+
+        //Atomic / Thread-safe State Value Update
+        _state.update{ it ->
+            //var playerList: List<Player> = it.players.toMutableList()
+            println("updating player 2...")
+            val playerList: List<Player> = it.players.map { curPlayer ->
+                println("updating player 3...${curPlayer.name}")
+                if(curPlayer.name == player.name){
+                    //Is this necessary for concurrency?
+                    println("updating player 3a...${curPlayer.name}")
+
+                    Player(player.name, curPlayer.score + update)
+                }
+                else curPlayer
+            }
+
+            println("updating player 4...")
+
+            it.copy(players = playerList)
+        }
+    }
 
     fun updateTile(index: Int){
         onEvent(MainViewModelEvent.TileUpdateEvent(index))
@@ -118,11 +154,12 @@ data class MainViewModelState (
     val gameSelection: Game? = null,
     val nameOne : String = "",
     val nameTwo : String = "",
+    val players : List<Player> = emptyList(),
     val tiles : List<TicTacToeTile> = mutableListOf<TicTacToeTile>().apply{ repeat(9){ this.add(
         TicTacToeTile()
     )}},
     val turn : Boolean = true,
-    var finished: Boolean = false
+    val finished: Boolean = false
 ) : Serializable
 
 sealed interface MainViewModelEvent{
@@ -132,6 +169,8 @@ sealed interface MainViewModelEvent{
     object GameResetEvent: MainViewModelEvent
     data class NameOneUpdateEvent(val name: String): MainViewModelEvent
     data class NameTwoUpdateEvent(val name: String): MainViewModelEvent
+    data class AddPlayerEvent(val player: Player): MainViewModelEvent
+    data class UpdatePlayerEvent(val player: Player, val scoreUpdate: Int): MainViewModelEvent
     object GameStartEvent: MainViewModelEvent
     data class TileUpdateEvent(val index: Int): MainViewModelEvent
     object GameFinishedEvent: MainViewModelEvent
@@ -143,9 +182,20 @@ sealed interface MainViewModelUiState{
     object GameScreen: MainViewModelUiState
 }
 
+data class Player(val name: String, val score: Int)
+
 sealed interface Game {
     data class TicTacToe(val name: String): Game
     data class Dominos(val name: String): Game
+    //Bowling
+    //Darts
+    //Boxing
+    //Bets?
+    //Ping Pong
+    //Airhockey / Shuffleboard
+    //Tennis
+    
+    //CUSTOM
 
     data class Games(val name:String): Game
 }
