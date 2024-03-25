@@ -73,17 +73,21 @@ class MainActivity : ComponentActivity() {
                             }
 
                             is MainViewModelUiState.NameScreen -> {
-                                NameScreen(state.nameOne,
-                                    { name -> mainViewModel.updateNameOne(name) },
-                                    state.nameTwo,
-                                    { name -> mainViewModel.updateNameTwo(name) },
+                                NameScreen(state.players,
+                                    { name -> mainViewModel.createNewPlayer(name) },
                                     { mainViewModel.goToGameScreen() },
                                     { mainViewModel.resetGame() })
                             }
 
                             is MainViewModelUiState.GameScreen -> {
-                                GameScreen(state.tiles) { index -> mainViewModel.selectTile(index) }
+                                GameScreen(state.players,
+                                    { mainViewModel.goToNameScreen() },
+                                    { mainViewModel.goToTitleScreen() },
+                                    { player, score -> mainViewModel.updatePlayer(player, score)}
+                                )
                             }
+
+                            else -> {}
                         }
                     }
                 }

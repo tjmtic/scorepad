@@ -17,15 +17,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.abyxcz.scorepad.Player
 
 @Composable
-fun TileCounterList(size: Int) {
-
-    val board by remember { mutableStateOf(arrayOfNulls<Int>(size)) }
+fun TileCounterList(players: List<Player>, onCount: (player:Player, score: Int)->Unit) {
 
     LazyVerticalGrid(columns= GridCells.Fixed(2), modifier = Modifier.fillMaxSize()) {
-        itemsIndexed(board) { index, item ->
-                TileCounter()
+        itemsIndexed(players) { index, item ->
+                TileCounter(item, onCount)
         }
     }
 }
