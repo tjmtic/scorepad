@@ -32,8 +32,8 @@ class MainViewModel: ViewModel() {
             is MainViewModelEvent.GameSelectionEvent -> { _state.update{ it.copy(gameSelection = event.game) } }
             is MainViewModelEvent.GameResetEvent -> { _state.update{ it.copy(gameSelection = null) } }
 
-            is MainViewModelEvent.NameOneUpdateEvent -> { _state.update{ it.copy(nameOne = event.name) } }
-            is MainViewModelEvent.NameTwoUpdateEvent -> { _state.update{ it.copy(nameTwo = event.name) } }
+            //is MainViewModelEvent.NameOneUpdateEvent -> { _state.update{ it.copy(nameOne = event.name) } }
+            //is MainViewModelEvent.NameTwoUpdateEvent -> { _state.update{ it.copy(nameTwo = event.name) } }
             is MainViewModelEvent.AddPlayerEvent -> { _state.update{ it.copy(players = it.players.plus(event.player)) } }
             is MainViewModelEvent.UpdatePlayerEvent -> { /* TODO */ }
             is MainViewModelEvent.GameStartEvent -> { _uiState.update{ MainViewModelUiState.GameScreen } }
@@ -66,13 +66,13 @@ class MainViewModel: ViewModel() {
 
 
     //Name Screen
-    fun updateNameOne(name: String){
+    /*fun updateNameOne(name: String){
         onEvent(MainViewModelEvent.NameOneUpdateEvent(name))
     }
 
     fun updateNameTwo(name: String){
         onEvent(MainViewModelEvent.NameTwoUpdateEvent(name))
-    }
+    }*/
 
     fun createNewPlayer(name: String){
         //
@@ -152,8 +152,8 @@ data class TicTacToeTile(var value:Int = 0)
 
 data class MainViewModelState (
     val gameSelection: Game? = null,
-    val nameOne : String = "",
-    val nameTwo : String = "",
+    //val nameOne : String = "",
+    //val nameTwo : String = "",
     val players : List<Player> = emptyList(),
     val tiles : List<TicTacToeTile> = mutableListOf<TicTacToeTile>().apply{ repeat(9){ this.add(
         TicTacToeTile()
@@ -167,8 +167,8 @@ sealed interface MainViewModelEvent{
     object BeginEvent: MainViewModelEvent
     data class GameSelectionEvent(val game: Game): MainViewModelEvent
     object GameResetEvent: MainViewModelEvent
-    data class NameOneUpdateEvent(val name: String): MainViewModelEvent
-    data class NameTwoUpdateEvent(val name: String): MainViewModelEvent
+    //data class NameOneUpdateEvent(val name: String): MainViewModelEvent
+    //data class NameTwoUpdateEvent(val name: String): MainViewModelEvent
     data class AddPlayerEvent(val player: Player): MainViewModelEvent
     data class UpdatePlayerEvent(val player: Player, val scoreUpdate: Int): MainViewModelEvent
     object GameStartEvent: MainViewModelEvent
@@ -185,8 +185,8 @@ sealed interface MainViewModelUiState{
 data class Player(val name: String, val score: Int)
 
 sealed interface Game {
-    data class TicTacToe(val name: String): Game
-    data class Dominos(val name: String): Game
+    data class TicTacToe(val name: String, val imageUrl: String?): Game
+    data class Dominos(val name: String, val imageUrl: String?): Game
     //Bowling
     //Darts
     //Boxing
@@ -197,5 +197,5 @@ sealed interface Game {
     
     //CUSTOM
 
-    data class Games(val name:String): Game
+    data class Games(val name:String, val imageUrl: Int?): Game
 }

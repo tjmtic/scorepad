@@ -16,20 +16,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.abyxcz.scorepad.Player
 import com.abyxcz.scorepad.ui.component.BouncingListItem
+import com.abyxcz.scorepad.ui.component.NavigationButtons
 import com.abyxcz.scorepad.ui.component.TileCounter
+import com.abyxcz.scorepad.ui.component.UserNameInputForm
 
 @Composable
 fun NameScreen(players: List<Player>, onValue1Save: (String) -> Unit, onClick: () -> Unit, onBack: () -> Unit){
-    var name by rememberSaveable{ mutableStateOf("")}
+    //var name by rememberSaveable{ mutableStateOf("")}
 
     Column{
-        TextField(value = name, onValueChange = { name = it } )
+        UserNameInputForm(title = "Game Name", onSubmit = onValue1Save)
+        /*TextField(value = name, onValueChange = { name = it } )
         //TextField(value= value2, onValueChange = { onValue2Change(it)} )
 
         Button( modifier = Modifier,
             onClick = { onValue1Save(name); name = "" }, content = {
                 Text(text="Add Player")
-            })
+            })*/
 
         Button( modifier = Modifier,
             onClick = { onClick()}, content = {
@@ -40,6 +43,8 @@ fun NameScreen(players: List<Player>, onValue1Save: (String) -> Unit, onClick: (
             onClick = { onBack()}, content = {
                 Text(text="Back")
             })
+
+        NavigationButtons(onClick, onBack)
 
 
         LazyVerticalGrid(columns= GridCells.Fixed(2), modifier = Modifier.fillMaxSize()) {
