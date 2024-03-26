@@ -64,6 +64,8 @@ fun UserNameInputForm(title: String, onSubmit: (String) -> Unit) {
             onClick = {
                 if (userName.isNotBlank()) {
                     onSubmit(userName)
+                    //Reset User Form
+                    userName = ""
                 }
             },
             modifier = Modifier.align(Alignment.End)

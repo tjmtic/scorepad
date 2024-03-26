@@ -25,16 +25,19 @@ fun NavigationButtons(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ShimmeringButton(
+
+        ArtisticButton(
             onClick = onBackClicked,
-            shimmerColor = Color(0xFF42A5F5),
-            buttonContent = { Text(text = "Back") }
+            gradientColors = listOf(Color(0xFFEF5350), Color(0xFFB71C1C)),
+            buttonText = "Back",
+            modifier = Modifier.weight(1f)
         )
 
-        ShimmeringButton(
+        ArtisticButton(
             onClick = onNextClicked,
-            shimmerColor = Color(0xFF42A5F5),
-            buttonContent = { Text(text = "Next") }
+            gradientColors = listOf(Color(0xFF66BB6A), Color(0xFF1B5E20)),
+            buttonText = "Next",
+            modifier = Modifier.weight(1f)
         )
     }
 }

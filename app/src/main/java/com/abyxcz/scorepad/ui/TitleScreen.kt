@@ -29,7 +29,7 @@ import com.abyxcz.scorepad.ui.component.SimpleAdView
 fun TitleScreen(onClick: () -> Unit, loadGame: (Game) -> Unit ) {
     Column {
 
-        SimpleAdView()
+       // SimpleAdView()
 
         LazyVerticalGrid(columns = GridCells.Fixed(2)) {
             itemsIndexed(
@@ -69,5 +69,7 @@ fun TitleScreen(onClick: () -> Unit, loadGame: (Game) -> Unit ) {
 @Preview
 @Composable
 fun PreviewTitleScreen(){
-    TitleScreen({}, {})
+    MaterialTheme {
+        TitleScreen({}, {})
+    }
 }
