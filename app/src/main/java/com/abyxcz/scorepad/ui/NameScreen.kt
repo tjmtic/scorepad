@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -14,8 +15,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.abyxcz.scorepad.Player
+import com.abyxcz.scorepad.R
 import com.abyxcz.scorepad.ui.component.BouncingListItem
+import com.abyxcz.scorepad.ui.component.HighEndListItem
 import com.abyxcz.scorepad.ui.component.NavigationButtons
 import com.abyxcz.scorepad.ui.component.TileCounter
 import com.abyxcz.scorepad.ui.component.UserNameInputForm
@@ -34,7 +38,7 @@ fun NameScreen(players: List<Player>, onValue1Save: (String) -> Unit, onClick: (
                 Text(text="Add Player")
             })*/
 
-        Button( modifier = Modifier,
+        /*Button( modifier = Modifier,
             onClick = { onClick()}, content = {
                 Text(text="Play")
             })
@@ -42,7 +46,7 @@ fun NameScreen(players: List<Player>, onValue1Save: (String) -> Unit, onClick: (
         Button( modifier = Modifier,
             onClick = { onBack()}, content = {
                 Text(text="Back")
-            })
+            })*/
 
         NavigationButtons(onClick, onBack)
 
@@ -50,9 +54,18 @@ fun NameScreen(players: List<Player>, onValue1Save: (String) -> Unit, onClick: (
         LazyVerticalGrid(columns= GridCells.Fixed(2), modifier = Modifier.fillMaxSize()) {
             itemsIndexed(players) { index, item ->
                 BouncingListItem(item = item.name, isLoading = false, imageUrl = null)
+                HighEndListItem(imageUrl = R.mipmap.bg2, title = item.name, specialDetail = "Player X")
             }
         }
     }
 
 
+}
+
+@Preview
+@Composable
+fun PreviewNameScreen(){
+    MaterialTheme {
+        NameScreen(emptyList(), {_->}, {}, {})
+    }
 }
