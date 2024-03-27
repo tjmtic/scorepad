@@ -18,7 +18,10 @@ import androidx.compose.ui.unit.dp
 import com.abyxcz.scorepad.Player
 import com.abyxcz.scorepad.TicTacToeTile
 import com.abyxcz.scorepad.Tile
+import com.abyxcz.scorepad.ui.component.HighEndTileCounterColumn
+import com.abyxcz.scorepad.ui.component.NavigationButtons
 import com.abyxcz.scorepad.ui.component.TileCounterList
+import com.abyxcz.scorepad.ui.component.UserNameInputForm
 
 @Composable
 fun GameScreen(players: List<Player>, onClick: () -> Unit, onBack: () -> Unit, onCount: (player:Player, score: Int) -> Unit){
@@ -30,7 +33,9 @@ fun GameScreen(players: List<Player>, onClick: () -> Unit, onBack: () -> Unit, o
     }*/
 
     Column {
-        Button(modifier = Modifier,
+        UserNameInputForm(title = "Controls", onSubmit = {} ) //Placeholder for control form
+        NavigationButtons(onClick, onBack)
+        /*Button(modifier = Modifier,
             onClick = { onClick() }, content = {
                 Text(text = "Change Players")
             })
@@ -38,7 +43,7 @@ fun GameScreen(players: List<Player>, onClick: () -> Unit, onBack: () -> Unit, o
         Button(modifier = Modifier,
             onClick = { onBack() }, content = {
                 Text(text = "Change Game")
-            })
+            })*/
 
         Box(
             modifier = Modifier
@@ -47,8 +52,9 @@ fun GameScreen(players: List<Player>, onClick: () -> Unit, onBack: () -> Unit, o
 
         ) {
 
-            //TODO: Num Players
-            TileCounterList(players, onCount )
+            //TODO: Num Players, game boards
+            //TileCounterList(players, onCount )
+            HighEndTileCounterColumn(players = players, onCount = onCount )
         }
     }
 }

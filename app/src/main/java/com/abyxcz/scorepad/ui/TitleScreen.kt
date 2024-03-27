@@ -3,7 +3,11 @@ package com.abyxcz.scorepad.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -21,6 +25,7 @@ import com.abyxcz.scorepad.Game
 import com.abyxcz.scorepad.R
 import com.abyxcz.scorepad.ui.component.BouncingListItem
 import com.abyxcz.scorepad.ui.component.HighEndListItem
+import com.abyxcz.scorepad.ui.component.HighEndTile
 import com.abyxcz.scorepad.ui.component.SimpleAdContainer
 import com.abyxcz.scorepad.ui.component.SimpleAdView
 
@@ -29,7 +34,41 @@ import com.abyxcz.scorepad.ui.component.SimpleAdView
 fun TitleScreen(onClick: () -> Unit, loadGame: (Game) -> Unit ) {
     Column {
 
+        val gameList = arrayListOf(
+            Game.Games("TicTacToe", imageUrl = R.mipmap.bg1),
+            Game.Games("Dominos", R.mipmap.bg2)
+        )
        // SimpleAdView()
+        Row(modifier = Modifier.fillMaxHeight()){
+            gameList.forEach {
+                //Card(
+                   // onClick = { loadGame(it) },
+                   // shape = RoundedCornerShape(16.dp),
+                    //modifier = Modifier.fillMaxHeight()
+                //) {
+                    Column(
+                        modifier = Modifier
+                            .clickable {
+                                println("CLICKED THE ${it.name}")
+                                loadGame(it)
+                            }
+                            .background(
+                                color = MaterialTheme.colorScheme.primaryContainer,
+                                shape = RoundedCornerShape(20.dp),
+                            )
+                            .padding(22.dp)
+                            .weight(.5f)
+                            .fillMaxHeight()
+                           // .width(IntrinsicSize.Max),
+                    ) {
+                        HighEndTile(imageUrl = it.imageUrl, title = it.name, specialDetail = it.name)
+                    }
+              //  }
+          }
+            //HighEndListItem(imageUrl = game.imageUrl, title = game.name, specialDetail = game.name)
+           // HighEndListItem(imageUrl = game.imageUrl, title = game.name, specialDetail = game.name)
+
+        }
 
         LazyVerticalGrid(columns = GridCells.Fixed(2)) {
             itemsIndexed(
