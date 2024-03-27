@@ -76,7 +76,8 @@ class MainActivity : ComponentActivity() {
                                 NameScreen(state.players,
                                     { name -> mainViewModel.createNewPlayer(name) },
                                     { mainViewModel.goToGameScreen() },
-                                    { mainViewModel.resetGame() })
+                                    { mainViewModel.resetGame() },
+                                    { player -> mainViewModel.removePlayer(player)})
                             }
 
                             is MainViewModelUiState.GameScreen -> {

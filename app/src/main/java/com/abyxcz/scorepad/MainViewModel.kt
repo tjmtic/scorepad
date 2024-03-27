@@ -35,6 +35,7 @@ class MainViewModel: ViewModel() {
             //is MainViewModelEvent.NameOneUpdateEvent -> { _state.update{ it.copy(nameOne = event.name) } }
             //is MainViewModelEvent.NameTwoUpdateEvent -> { _state.update{ it.copy(nameTwo = event.name) } }
             is MainViewModelEvent.AddPlayerEvent -> { _state.update{ it.copy(players = it.players.plus(event.player)) } }
+            is MainViewModelEvent.RemovePlayerEvent -> { _state.update{ it.copy(players = it.players.minus(event.player)) } }
             is MainViewModelEvent.UpdatePlayerEvent -> { /* TODO */ }
             is MainViewModelEvent.GameStartEvent -> { _uiState.update{ MainViewModelUiState.GameScreen } }
 
@@ -75,7 +76,7 @@ class MainViewModel: ViewModel() {
     }*/
 
     fun createNewPlayer(name: String){
-        //
+        //Default init
         val newPlayer = Player(name, 0)
         //
 
@@ -86,6 +87,9 @@ class MainViewModel: ViewModel() {
         onEvent(MainViewModelEvent.GameStartEvent)
     }
 
+    fun removePlayer(player: Player){
+        onEvent(MainViewModelEvent.RemovePlayerEvent(player))
+    }
 
 
     //Game Screen
@@ -171,6 +175,7 @@ sealed interface MainViewModelEvent{
     //data class NameTwoUpdateEvent(val name: String): MainViewModelEvent
     data class AddPlayerEvent(val player: Player): MainViewModelEvent
     data class UpdatePlayerEvent(val player: Player, val scoreUpdate: Int): MainViewModelEvent
+    data class RemovePlayerEvent(val player: Player): MainViewModelEvent
     object GameStartEvent: MainViewModelEvent
     data class TileUpdateEvent(val index: Int): MainViewModelEvent
     object GameFinishedEvent: MainViewModelEvent

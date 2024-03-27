@@ -33,19 +33,13 @@ import com.abyxcz.scorepad.ui.component.SimpleAdView
 @Composable
 fun TitleScreen(onClick: () -> Unit, loadGame: (Game) -> Unit ) {
     Column {
-
         val gameList = arrayListOf(
             Game.Games("TicTacToe", imageUrl = R.mipmap.bg1),
             Game.Games("Dominos", R.mipmap.bg2)
         )
-       // SimpleAdView()
+
         Row(modifier = Modifier.fillMaxHeight()){
             gameList.forEach {
-                //Card(
-                   // onClick = { loadGame(it) },
-                   // shape = RoundedCornerShape(16.dp),
-                    //modifier = Modifier.fillMaxHeight()
-                //) {
                     Column(
                         modifier = Modifier
                             .clickable {
@@ -59,15 +53,10 @@ fun TitleScreen(onClick: () -> Unit, loadGame: (Game) -> Unit ) {
                             .padding(22.dp)
                             .weight(.5f)
                             .fillMaxHeight()
-                           // .width(IntrinsicSize.Max),
                     ) {
                         HighEndTile(imageUrl = it.imageUrl, title = it.name, specialDetail = it.name)
                     }
-              //  }
           }
-            //HighEndListItem(imageUrl = game.imageUrl, title = game.name, specialDetail = game.name)
-           // HighEndListItem(imageUrl = game.imageUrl, title = game.name, specialDetail = game.name)
-
         }
 
         LazyVerticalGrid(columns = GridCells.Fixed(2)) {
