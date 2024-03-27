@@ -63,5 +63,7 @@ fun GameScreen(players: List<Player>, onClick: () -> Unit, onBack: () -> Unit, o
 @Preview
 @Composable
 fun GameScreenPreview(){
-    GameScreen(players = emptyList(), onClick = {}, onBack = {}, onCount = { _ , _ -> {} })
+    val list = listOf(Player("A", 0), Player("B", 2), Player("3", 3))
+
+    GameScreen(players = list, onClick = {}, onBack = {}, onCount = { _ , _ -> {} })
 }
