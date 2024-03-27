@@ -18,6 +18,14 @@ fun SimpleAdContainer(content: @Composable () -> Unit = { }) {
 
         Box(
             modifier = Modifier
+                .align(Alignment.TopCenter)
+                .fillMaxWidth()
+        ) {
+            SimpleAdView()
+        }
+
+        Box(
+            modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
         ) {

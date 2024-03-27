@@ -47,13 +47,14 @@ fun HighEndTileCounterList(
         modifier = Modifier
             .fillMaxSize()
             .padding(20.dp)
+
     ) {
         items(players.size) { index ->
             HighEndTileCounter(
                 player = players[index],
                 onCount = onCount,
                 modifier = Modifier
-                    .padding(25.dp)
+                    //.padding(25.dp)
                     .fillMaxSize()
             )
         }
@@ -65,20 +66,21 @@ fun HighEndTileCounterColumn(
     players: List<Player>,
     onCount: (player: Player, score: Int) -> Unit
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+    Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(1.dp),
 
-    ) {
-        items(players.size) { index ->
-            HighEndTileCounter(
-                player = players[index],
-                onCount = onCount,
-                modifier = Modifier.fillMaxSize().padding(20.dp)
-            )
-        }
+            ) {
+            players.forEach { index ->
+                HighEndTileCounter(
+                    player = index,
+                    onCount = onCount,
+                    modifier = Modifier.padding(1.dp).weight(1f/players.size)
+                )
+            }
+
     }
 }
 
