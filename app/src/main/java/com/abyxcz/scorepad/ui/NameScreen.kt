@@ -1,5 +1,7 @@
 package com.abyxcz.scorepad.ui
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -25,7 +27,8 @@ import com.abyxcz.scorepad.ui.component.TileCounter
 import com.abyxcz.scorepad.ui.component.UserNameInputForm
 
 @Composable
-fun NameScreen(players: List<Player>, onValue1Save: (String) -> Unit, onClick: () -> Unit, onBack: () -> Unit){
+fun NameScreen(players: List<Player>, onValue1Save: (String) -> Unit,
+               onClick: () -> Unit, onBack: () -> Unit, onRemove: (Player) -> Unit){
     //var name by rememberSaveable{ mutableStateOf("")}
 
     Column{
@@ -54,8 +57,14 @@ fun NameScreen(players: List<Player>, onValue1Save: (String) -> Unit, onClick: (
         LazyVerticalGrid(columns= GridCells.Fixed(2), modifier = Modifier.fillMaxSize()) {
             itemsIndexed(players) { index, item ->
                 BouncingListItem(item = item.name, isLoading = false, imageUrl = null)
-                HighEndListItem(imageUrl = R.mipmap.bg2, title = item.name, specialDetail = "Player X")
-            }
+                Box(modifier = Modifier.clickable{ onRemove(item) }) {
+                    HighEndListItem(
+                        imageUrl = R.mipmap.bg2,
+                        title = item.name,
+                        specialDetail = "Player X",
+                    )
+                }
+                }
         }
     }
 
@@ -66,6 +75,6 @@ fun NameScreen(players: List<Player>, onValue1Save: (String) -> Unit, onClick: (
 @Composable
 fun PreviewNameScreen(){
     MaterialTheme {
-        NameScreen(emptyList(), {_->}, {}, {})
+        NameScreen(emptyList(), {_->}, {}, {}, {})
     }
 }
