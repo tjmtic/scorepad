@@ -12,6 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -63,7 +64,7 @@ fun GameScreen(players: List<Player>, onClick: () -> Unit, onBack: () -> Unit, o
 @Preview
 @Composable
 fun GameScreenPreview(){
-    val list = listOf(Player("A", 0), Player("B", 2), Player("3", 3))
+    val list = listOf(Player("A", 0, Color(0xFF00FF00), null), Player("B", 2, Color(0xFF00FF00), null), Player("3", 3, Color(0xFF00FF00), null))
 
     GameScreen(players = list, onClick = {}, onBack = {}, onCount = { _ , _ -> {} })
 }

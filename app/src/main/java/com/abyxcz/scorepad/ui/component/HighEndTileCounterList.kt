@@ -14,11 +14,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
@@ -130,14 +133,27 @@ fun HighEndTileCounter(
             }
             .fillMaxSize()
             .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
+                color = player.color,
                 //shape = shape
             )
             //.padding(16.dp)
     ) {
-       // Column {
-            Text("${player.name} ${player.score} $count")
-      //  }
+        Row {
+            player.icon?.let {
+                Icon(
+                    imageVector = it,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(40.dp)
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .padding(22.dp),
+            ) {
+                Text("${player.name} ${player.score} ${player.color} ${player.icon} $count")
+            }
+        }
     }
 }
 
@@ -155,13 +171,13 @@ private fun calculateColumnCount(itemCount: Int): Int {
 @Preview
 @Composable
 fun previewHighEndTileCounter(){
-    HighEndTileCounter(player = Player("A", 0), onCount = {_,_->})
+    HighEndTileCounter(player = Player("A", 0, Color(0xFF00FF00), null), onCount = { _, _->})
 }
 
 @Preview
 @Composable
 fun previewHighEnd(){
-    val list = listOf(Player("A", 0), Player("B", 2))
+    val list = listOf(Player("A", 0, Color(0xFF00FF00), null), Player("B", 2, Color(0xFF00FF00), null))
     MaterialTheme {
         HighEndTileCounterList(players = list, onCount = { _, _ -> })
     }
@@ -170,7 +186,7 @@ fun previewHighEnd(){
 @Preview
 @Composable
 fun previewHighEnd3(){
-    val list = listOf(Player("A", 0), Player("B", 2), Player("3", 3))
+    val list = listOf(Player("A", 0, Color(0xFF00FF00), null), Player("B", 2, Color(0xFF00FF00), null), Player("3", 3, Color(0xFF00FF00), null))
     MaterialTheme {
         HighEndTileCounterList(players = list, onCount = { _, _ -> })
     }
@@ -179,13 +195,14 @@ fun previewHighEnd3(){
 @Preview
 @Composable
 fun previewHighEndColumn(){
-    val list = listOf(Player("A", 0), Player("B", 2))
+    val list = listOf(Player("A", 0, Color(0xFF00FF00), null), Player("B", 2, Color(0xFF00FF00), null))
     HighEndTileCounterColumn(players = list, onCount = {_,_->})
 }
 
 @Preview
 @Composable
 fun previewHighEndLazyColumn(){
-    val list = listOf(Player("A", 0), Player("B", 2))
+    val list = listOf(Player("A", 0, Color(0xFF00FF00), null), Player("B", 2, Color(0xFF00FF00), null))
     HighEndTileCounterLazyColumn(players = list, onCount = {_,_->})
 }
+

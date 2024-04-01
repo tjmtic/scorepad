@@ -17,22 +17,32 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.abyxcz.scorepad.Player
 import com.abyxcz.scorepad.R
 import com.abyxcz.scorepad.ui.component.BouncingListItem
+import com.abyxcz.scorepad.ui.component.HighEndForm
 import com.abyxcz.scorepad.ui.component.HighEndListItem
 import com.abyxcz.scorepad.ui.component.NavigationButtons
 import com.abyxcz.scorepad.ui.component.TileCounter
 import com.abyxcz.scorepad.ui.component.UserNameInputForm
 
 @Composable
-fun NameScreen(players: List<Player>, onValue1Save: (String) -> Unit,
+fun NameScreen(players: List<Player>, onValue1Save: (String, Color, ImageVector) -> Unit,
                onClick: () -> Unit, onBack: () -> Unit, onRemove: (Player) -> Unit){
     //var name by rememberSaveable{ mutableStateOf("")}
 
     Column{
-        UserNameInputForm(title = "Game Name", onSubmit = onValue1Save)
+        HighEndForm(
+            onNameChanged = {},
+            onColorSelected = {},
+            onIconSelected = {} ,
+            onSubmit = onValue1Save
+        )
+
+        //UserNameInputForm(title = "Game Name", onSubmit = onValue1Save)
         /*TextField(value = name, onValueChange = { name = it } )
         //TextField(value= value2, onValueChange = { onValue2Change(it)} )
 
@@ -75,6 +85,6 @@ fun NameScreen(players: List<Player>, onValue1Save: (String) -> Unit,
 @Composable
 fun PreviewNameScreen(){
     MaterialTheme {
-        NameScreen(emptyList(), {_->}, {}, {}, {})
+        NameScreen(emptyList(), {_, _,_->}, {}, {}, {})
     }
 }
