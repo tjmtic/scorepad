@@ -1,5 +1,7 @@
 package com.abyxcz.scorepad
 
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,7 +42,7 @@ class MainViewModel: ViewModel() {
             is MainViewModelEvent.GameStartEvent -> { _uiState.update{ MainViewModelUiState.GameScreen } }
 
 
-            is MainViewModelEvent.TileUpdateEvent -> { selectTile(event.index) }
+            is MainViewModelEvent.TileUpdateEvent -> { /* selectTile(event.index) */ }
             is MainViewModelEvent.GameFinishedEvent -> { /* show winning dialogs */ }
         }
     }
@@ -75,9 +77,9 @@ class MainViewModel: ViewModel() {
         onEvent(MainViewModelEvent.NameTwoUpdateEvent(name))
     }*/
 
-    fun createNewPlayer(name: String){
+    fun createNewPlayer(name: String, color: Color, icon: ImageVector){
         //Default init
-        val newPlayer = Player(name, 0)
+        val newPlayer = Player(name, 0, color, icon)
         //
 
         onEvent(MainViewModelEvent.AddPlayerEvent(newPlayer))
@@ -107,7 +109,9 @@ class MainViewModel: ViewModel() {
                     //Is this necessary for concurrency?
                     println("updating player 3a...${curPlayer.name}")
 
-                    Player(player.name, curPlayer.score + update)
+                    //Player(player.name, curPlayer.score + update, player.color, player.icon)
+
+                    player.copy(score = curPlayer.score + update)
                 }
                 else curPlayer
             }
@@ -122,7 +126,7 @@ class MainViewModel: ViewModel() {
         onEvent(MainViewModelEvent.TileUpdateEvent(index))
     }
 
-    fun selectTile(index: Int){
+    /*fun selectTile(index: Int){
 
         _state.update {
             if(it.tiles[index].value == 0) {
@@ -138,7 +142,7 @@ class MainViewModel: ViewModel() {
         if(checkBoard()){
             finishGame()
         }
-    }
+    }*/
 
     private fun checkBoard(): Boolean{
         //search board spaces...
@@ -156,12 +160,10 @@ data class TicTacToeTile(var value:Int = 0)
 
 data class MainViewModelState (
     val gameSelection: Game? = null,
-    //val nameOne : String = "",
-    //val nameTwo : String = "",
     val players : List<Player> = emptyList(),
-    val tiles : List<TicTacToeTile> = mutableListOf<TicTacToeTile>().apply{ repeat(9){ this.add(
-        TicTacToeTile()
-    )}},
+    //val tiles : List<TicTacToeTile> = mutableListOf<TicTacToeTile>().apply{ repeat(9){ this.add(
+    //    TicTacToeTile()
+    //)}},
     val turn : Boolean = true,
     val finished: Boolean = false
 ) : Serializable
@@ -171,8 +173,6 @@ sealed interface MainViewModelEvent{
     object BeginEvent: MainViewModelEvent
     data class GameSelectionEvent(val game: Game): MainViewModelEvent
     object GameResetEvent: MainViewModelEvent
-    //data class NameOneUpdateEvent(val name: String): MainViewModelEvent
-    //data class NameTwoUpdateEvent(val name: String): MainViewModelEvent
     data class AddPlayerEvent(val player: Player): MainViewModelEvent
     data class UpdatePlayerEvent(val player: Player, val scoreUpdate: Int): MainViewModelEvent
     data class RemovePlayerEvent(val player: Player): MainViewModelEvent
@@ -187,7 +187,7 @@ sealed interface MainViewModelUiState{
     object GameScreen: MainViewModelUiState
 }
 
-data class Player(val name: String, val score: Int)
+data class Player(val name: String, val score: Int, val color: Color, val icon: ImageVector?)
 
 sealed interface Game {
     data class TicTacToe(val name: String, val imageUrl: String?): Game
