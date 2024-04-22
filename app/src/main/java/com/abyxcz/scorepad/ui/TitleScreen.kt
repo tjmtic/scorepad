@@ -66,7 +66,7 @@ fun TitleScreen(onClick: () -> Unit, loadGame: (Game) -> Unit ) {
             itemsIndexed(
                 arrayListOf(
                     Game.Games("Tally", imageUrl = R.mipmap.tally),
-                    Game.Games("TicTacToe", imageUrl = R.mipmap.bg1),
+                    Game.Games("TicTacToe", imageUrl = R.mipmap.xo),
                     Game.Games("Dominos", R.mipmap.bg2),
                     Game.Games("Basketball", R.mipmap.basketball)
                 )

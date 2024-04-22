@@ -33,7 +33,8 @@ import com.abyxcz.scorepad.R
 fun HighEndScoreboard(
     title: String,
     value: Int,
-    logo: Int = R.mipmap.tally
+    logo: Int = R.mipmap.tally,
+    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = Modifier
