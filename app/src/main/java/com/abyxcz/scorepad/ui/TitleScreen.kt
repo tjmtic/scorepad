@@ -34,11 +34,14 @@ import com.abyxcz.scorepad.ui.component.SimpleAdView
 fun TitleScreen(onClick: () -> Unit, loadGame: (Game) -> Unit ) {
     Column {
         val gameList = arrayListOf(
-            Game.Games("TicTacToe", imageUrl = R.mipmap.bg1),
-            Game.Games("Dominos", R.mipmap.bg2)
+            Game.Games("Tally", imageUrl = R.mipmap.tally),
+            Game.Games("Dominos", R.mipmap.bg2),
+            Game.Games("TicTacToe", R.mipmap.bg1),
+            Game.Games("BasketBall", R.mipmap.basketball)
+
         )
 
-        Row(modifier = Modifier.fillMaxHeight()){
+        /*Row(modifier = Modifier.fillMaxHeight()){
             gameList.forEach {
                     Column(
                         modifier = Modifier
@@ -57,20 +60,23 @@ fun TitleScreen(onClick: () -> Unit, loadGame: (Game) -> Unit ) {
                         HighEndTile(imageUrl = it.imageUrl, title = it.name, specialDetail = it.name)
                     }
           }
-        }
+        }*/
 
-        LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+        LazyVerticalGrid(columns = GridCells.Fixed(1), modifier = Modifier.fillMaxHeight()) {
             itemsIndexed(
                 arrayListOf(
+                    Game.Games("Tally", imageUrl = R.mipmap.tally),
                     Game.Games("TicTacToe", imageUrl = R.mipmap.bg1),
-                    Game.Games("Dominos", R.mipmap.bg2)
+                    Game.Games("Dominos", R.mipmap.bg2),
+                    Game.Games("Basketball", R.mipmap.basketball)
                 )
             ) { index, game ->
 
 
                 Card(
                     onClick = { loadGame(game) },
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.fillMaxHeight()
                 ) {
 
                     Column(
@@ -83,7 +89,8 @@ fun TitleScreen(onClick: () -> Unit, loadGame: (Game) -> Unit ) {
                                 color = MaterialTheme.colorScheme.primaryContainer,
                                 shape = RoundedCornerShape(20.dp),
                             )
-                            .padding(22.dp),
+                            .padding(22.dp)
+                            .fillMaxHeight(),
                     ) {
 
                         HighEndListItem(imageUrl = game.imageUrl, title = game.name, specialDetail = game.name)

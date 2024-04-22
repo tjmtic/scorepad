@@ -138,7 +138,10 @@ fun HighEndTileCounter(
             )
             //.padding(16.dp)
     ) {
-        Row {
+        Row ( modifier = Modifier.background(
+            color = player.color,)
+            //shape = shape
+        ) {
             player.icon?.let {
                 Icon(
                     imageVector = it,
