@@ -49,7 +49,8 @@ fun GameScreen(players: List<Player>, onClick: () -> Unit, onBack: () -> Unit, o
         }
     }*/
 
-    TallyBoard(players = players, onClick = onClick, onBack = onBack, onCount = onCount)
+    //TallyBoard(players = players, onClick = onClick, onBack = onBack, onCount = onCount)
+    TicTacToeBoard(players = players, onClick = onClick, onBack = onBack, onCount = onCount)
 }
 
 
