@@ -19,13 +19,14 @@ import androidx.compose.ui.unit.dp
 import com.abyxcz.scorepad.Player
 import com.abyxcz.scorepad.TicTacToeTile
 import com.abyxcz.scorepad.Tile
+import com.abyxcz.scorepad.data.Game
 import com.abyxcz.scorepad.ui.component.HighEndTileCounterColumn
 import com.abyxcz.scorepad.ui.component.NavigationButtons
 import com.abyxcz.scorepad.ui.component.TileCounterList
 import com.abyxcz.scorepad.ui.component.UserNameInputForm
 
 @Composable
-fun GameScreen(players: List<Player>, onClick: () -> Unit, onBack: () -> Unit, onCount: (player:Player, score: Int) -> Unit){
+fun GameScreen(gameSelection: Game?, players: List<Player>, onClick: () -> Unit, onBack: () -> Unit, onCount: (player:Player, score: Int) -> Unit){
 
    /* LazyVerticalGrid(columns= GridCells.Fixed(3)) {
         itemsIndexed(board) { index, item ->
@@ -49,9 +50,12 @@ fun GameScreen(players: List<Player>, onClick: () -> Unit, onBack: () -> Unit, o
         }
     }*/
 
-    //TallyBoard(players = players, onClick = onClick, onBack = onBack, onCount = onCount)
-    //TicTacToeBoard(players = players, onClick = onClick, onBack = onBack, onCount = onCount)
-    DominoBoard(players = players, onClick = onClick, onBack = onBack, onCount = onCount)
+    when(gameSelection) {
+        is Game.Tally -> { TallyBoard(players = players, onClick = onClick, onBack = onBack, onCount = onCount) }
+        is Game.TicTacToe -> { TicTacToeBoard(players = players, onClick = onClick, onBack = onBack, onCount = onCount) }
+        is Game.Dominos ->  { DominoBoard(players = players, onClick = onClick, onBack = onBack, onCount = onCount) }
+        else -> { TallyBoard(players = players, onClick = onClick, onBack = onBack, onCount = onCount) }
+    }
 }
 
 
@@ -60,5 +64,21 @@ fun GameScreen(players: List<Player>, onClick: () -> Unit, onBack: () -> Unit, o
 fun GameScreenPreview(){
     val list = listOf(Player("A", 0, Color(0xFF00FF00), null), Player("B", 2, Color(0xFF00FF00), null), Player("3", 3, Color(0xFF00FF00), null))
 
-    GameScreen(players = list, onClick = {}, onBack = {}, onCount = { _ , _ -> {} })
+    GameScreen(Game.Tally("Tally 0!"), players = list, onClick = {}, onBack = {}, onCount = { _ , _ -> {} })
+}
+
+@Preview
+@Composable
+fun TicTacToeScreenPreview(){
+    val list = listOf(Player("A", 0, Color(0xFF00FF00), null), Player("B", 2, Color(0xFF00FF00), null), Player("3", 3, Color(0xFF00FF00), null))
+
+    GameScreen(Game.TicTacToe(0), players = list, onClick = {}, onBack = {}, onCount = { _ , _ -> {} })
+}
+
+@Preview
+@Composable
+fun DominosScreenPreview(){
+    val list = listOf(Player("A", 0, Color(0xFF00FF00), null), Player("B", 2, Color(0xFF00FF00), null), Player("3", 3, Color(0xFF00FF00), null))
+
+    GameScreen(Game.Dominos(4), players = list, onClick = {}, onBack = {}, onCount = { _ , _ -> {} })
 }

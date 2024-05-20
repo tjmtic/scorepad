@@ -81,7 +81,7 @@ class MainActivity : ComponentActivity() {
                             }
 
                             is MainViewModelUiState.GameScreen -> {
-                                GameScreen(state.players,
+                                GameScreen(state.gameSelection, state.players,
                                     { mainViewModel.goToNameScreen() },
                                     { mainViewModel.goToTitleScreen() },
                                     { player, score -> mainViewModel.updatePlayer(player, score)}
