@@ -21,8 +21,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.abyxcz.scorepad.Game
 import com.abyxcz.scorepad.R
+import com.abyxcz.scorepad.data.Game
+import com.abyxcz.scorepad.data.displayName
+import com.abyxcz.scorepad.data.getProperties
 import com.abyxcz.scorepad.ui.component.BouncingListItem
 import com.abyxcz.scorepad.ui.component.HighEndListItem
 import com.abyxcz.scorepad.ui.component.HighEndTile
@@ -33,42 +35,14 @@ import com.abyxcz.scorepad.ui.component.SimpleAdView
 @Composable
 fun TitleScreen(onClick: () -> Unit, loadGame: (Game) -> Unit ) {
     Column {
-        val gameList = arrayListOf(
-            Game.Games("Tally", imageUrl = R.mipmap.tally),
-            Game.Games("Dominos", R.mipmap.bg2),
-            Game.Games("TicTacToe", R.mipmap.bg1),
-            Game.Games("BasketBall", R.mipmap.basketball)
-
-        )
-
-        /*Row(modifier = Modifier.fillMaxHeight()){
-            gameList.forEach {
-                    Column(
-                        modifier = Modifier
-                            .clickable {
-                                println("CLICKED THE ${it.name}")
-                                loadGame(it)
-                            }
-                            .background(
-                                color = MaterialTheme.colorScheme.primaryContainer,
-                                shape = RoundedCornerShape(20.dp),
-                            )
-                            .padding(22.dp)
-                            .weight(.5f)
-                            .fillMaxHeight()
-                    ) {
-                        HighEndTile(imageUrl = it.imageUrl, title = it.name, specialDetail = it.name)
-                    }
-          }
-        }*/
 
         LazyVerticalGrid(columns = GridCells.Fixed(1), modifier = Modifier.fillMaxHeight()) {
             itemsIndexed(
                 arrayListOf(
-                    Game.Games("Tally", imageUrl = R.mipmap.tally),
-                    Game.Games("TicTacToe", imageUrl = R.mipmap.xo),
-                    Game.Games("Dominos", R.mipmap.bg2),
-                    Game.Games("Basketball", R.mipmap.basketball)
+                    Game.Tally("Tally Ho!"),
+                    Game.Dominos(4),
+                    Game.TicTacToe(2),
+                    Game.Basketball(16, "hoopre")
                 )
             ) { index, game ->
 
@@ -81,10 +55,7 @@ fun TitleScreen(onClick: () -> Unit, loadGame: (Game) -> Unit ) {
 
                     Column(
                         modifier = Modifier
-                            /*.clickable {
-                                println("CLICKED THE ${index}")
-                                loadGame(game)
-                            }*/
+
                             .background(
                                 color = MaterialTheme.colorScheme.primaryContainer,
                                 shape = RoundedCornerShape(20.dp),
@@ -93,7 +64,7 @@ fun TitleScreen(onClick: () -> Unit, loadGame: (Game) -> Unit ) {
                             .fillMaxHeight(),
                     ) {
 
-                        HighEndListItem(imageUrl = game.imageUrl, title = game.name, specialDetail = game.name)
+                        HighEndListItem(imageUrl = game.getProperties().image, title = game.getProperties().name, specialDetail = game.displayName)
                     }
                 }
             }
