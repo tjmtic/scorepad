@@ -162,9 +162,6 @@ data class TicTacToeTile(var value:Int = 0)
 data class MainViewModelState (
     val gameSelection: Game? = null,
     val players : List<Player> = emptyList(),
-    //val tiles : List<TicTacToeTile> = mutableListOf<TicTacToeTile>().apply{ repeat(9){ this.add(
-    //    TicTacToeTile()
-    //)}},
     val turn : Boolean = true,
     val finished: Boolean = false
 ) : Serializable
