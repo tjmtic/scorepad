@@ -48,5 +48,5 @@ val Game.displayName: String
         is Game.Bowling -> TODO()
         is Game.Boxing -> TODO()
         is Game.Darts -> TODO()
-        is Game.TicTacToe -> TODO()
+        is Game.TicTacToe -> "TIC Tac TOE"
     }
