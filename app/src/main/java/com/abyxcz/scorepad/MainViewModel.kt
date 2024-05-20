@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.abyxcz.scorepad.data.Game
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -188,19 +189,3 @@ sealed interface MainViewModelUiState{
 }
 
 data class Player(val name: String, val score: Int, val color: Color, val icon: ImageVector?)
-
-sealed interface Game {
-    data class TicTacToe(val name: String, val imageUrl: String?): Game
-    data class Dominos(val name: String, val imageUrl: String?): Game
-    //Bowling
-    //Darts
-    //Boxing
-    //Bets?
-    //Ping Pong
-    //Airhockey / Shuffleboard
-    //Tennis
-    
-    //CUSTOM
-
-    data class Games(val name:String, val imageUrl: Int?): Game
-}
