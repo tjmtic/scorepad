@@ -33,10 +33,6 @@ fun Game.getProperties() : GameProperties {
     }
 }
 
-
-///////////////////
-//Unnecessary from defaults in interface
-
 //GAME.EXT
 //Extension Properties
 val Game.displayName: String

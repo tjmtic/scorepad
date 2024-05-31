@@ -23,8 +23,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.abyxcz.scorepad.Player
-import com.abyxcz.scorepad.TicTacToeTile
-import com.abyxcz.scorepad.Tile
 import com.abyxcz.scorepad.ui.component.ControlButtons
 import com.abyxcz.scorepad.ui.component.HighEndScoreboard
 import com.abyxcz.scorepad.ui.component.HighEndTileCounterColumn

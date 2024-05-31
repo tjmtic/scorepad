@@ -107,32 +107,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-
-@Composable
-fun Tile(tile: TicTacToeTile, onClick: () -> Unit){
-
-    Box(Modifier.clickable { onClick() }) {
-        when (tile.value) {
-            1 -> {
-                Text("X")
-            }
-
-            2 -> {
-                Text("O")
-            }
-
-            else -> {
-                Text("")
-            }
-        }
-    }
-}
-
-
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
