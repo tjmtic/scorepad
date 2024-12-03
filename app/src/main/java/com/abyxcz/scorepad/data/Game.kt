@@ -2,6 +2,14 @@ package com.abyxcz.scorepad.data
 
 import com.abyxcz.scorepad.R
 
+private enum class GameType(name: String, val image: Int){
+    TALLY("Tally", R.mipmap.tally),
+    DOMINOS("Dominos", R.mipmap.bg2),
+    BASKETBALL("Basketball", R.mipmap.basketball),
+    TICTACTOE("Tic-Tac-Toe", R.mipmap.bg1),
+
+}
+
 sealed interface Game {
 
     data class Tally(val title: String) : Game
